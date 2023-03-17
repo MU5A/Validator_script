@@ -1,0 +1,133 @@
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBX_hyilSvXt0bE5fn3kUae-MJzU8qBuzI",
+    authDomain: "fir-case-prototype.firebaseapp.com",
+    databaseURL: "https://fir-case-prototype.firebaseio.com",
+    projectId: "fir-case-prototype",
+    storageBucket: "",
+    messagingSenderId: "474114067786"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<div class="top-bar">
+	<ul class="nav-list">
+  	<li><a href="#">Home</a></li>
+  	<li><a href="#">Help</a></li>
+	</ul>
+
+	<div id="search-box">
+    <input type="text" name="parts-search" placeholder="Mfg., Model, or Part Number" size=30>
+	</div>
+		
+	<div id="auth-control">
+		<img src="https://www.alexandercowan.com/wp-content/uploads/2018/04/login-icon.png" alt="auth" style="width:30px;float: left;">
+		<ul class="nav-list">
+		<li id="login-trigger"><a href="#" id="auth-text">Log In</a></li>
+		</ul>
+		
+		<div id="login-content">
+		<!-- On Forms: -->
+		<!-- onsubmit="return false" will stop the form submission but allow us to pick up the submission in JQuery with $('#login-form').submit(), 		otherwise JSFiddle can break. -->
+
+			<!-- allows us to easily switch between login and registration //removed for new approach -->
+		<!--	<input type='checkbox' id='form-switch'>  -->
+
+			<!-- Login -->
+			<form id='login-form' method='post' onsubmit="return false">
+				<input type="text" placeholder="Email" id="login_email" required>
+				<input type="password" placeholder="Password" id="login_pwd" required>
+				<button type='submit'>Log In</button>
+				<a id='forgotten-link'>Forgot Password?</a>
+				<h3><a class='auth-link' id='register-link'>Register</a></h3>
+			</form>
+
+			<!-- Registration -->
+			<form id='register-form' method='post' onsubmit="return false">
+				<input type="text" placeholder="Email" id="register_email" required>
+				<input type="password" placeholder="Password" id="register_pwd" required>
+				<input type="password" placeholder="Confirm Password" id="register_re_pwd" required>
+				<button type='submit' style = "text-align: right;">Register</button>
+				<div id='if-reg-error'><div id='reg-error-response' style="margin-top: 5px;"></div></div>
+			</form>
+			
+			<!-- Password Recovery -->
+			<form id='forgotten-form' method='post' onsubmit="return false">
+				<div id='before-reset'><input type="text" placeholder="Email" id="recovery_email" required>
+				<button type='submit'>Recover</button></div>
+				<div id='after-reset'><div id='reset-response' style="margin-top: 5px;"><p>Reset instructions are on their way to <span id='submitted-email'>email</span>. If you're still having trouble with login, please get in touch.</p><p><a id='login-link-modal' href='#'>Log In</a><p></div></div>
+				<div id='if-error'><div id='error-response' style="margin-top: 5px;"></div></div>
+			</form>
+	
+		</div>                  
+	</div>
+</div>
+
+<div id="toggle-search">
+<img src="https://www.alexandercowan.com/wp-content/uploads/2018/01/show-hide-icon.png" alt="search control toggle">
+</div>
+
+<div id="search-controls">
+	<div id="result-sort">
+				Sort By
+				<select>
+					<option value="None">Popularity</option>
+					<option value="Acme">Price</option>
+					<option value="Bacme">Manufacturer</option>
+				</select>
+	</div>
+	<div id="filter-parts">
+			Search By
+			<select id="dd-mfr">
+				<option value="All">Manufacturer</option>
+				<option value="Acme">Acme</option>
+				<option value="Bacme">Bacme</option>
+				<option value="Cacme">Cacme</option>
+				<option value="Dacme">Dacme</option>
+			</select>
+			<select id="dd-model">
+				<option value="All">Model</option>
+				<option value="TooCool">TooCool</option>
+				<option value="TooHot">TooHot</option>
+				<option value="JustRight">JustRight</option>
+				<option value="Coolerator">Coolerator</option>
+			</select>
+			<select>
+				<option value="All">Type</option>
+				<option value="Sniggler">Sniggler</option>
+				<option value="Wiggler">Wiggler</option>
+				<option value="Jiggler">Jiggler</option>
+				<option value="Tiggler">Tiggler</option>
+			</select>
+	</div>
+	<button type="button" id='search-btn'>Go</button>
+</div>
+
+<div id="parts-content">
+        <div class="catalog-part" mfr="Acme" model="TooCool">
+          <img src="https://www.alexandercowan.com/wp-content/uploads/2017/12/PCB-board-150px.png" alt="PCB board">
+					  <div class="overlay"><p>
+						Acme #GR1688<br>87 Orders<br>$12.30 Same Day</p>
+						</div>			
+				</div>
+        <div class="catalog-part" mfr="Bacme" model="TooHot">
+          <img src="https://www.alexandercowan.com/wp-content/uploads/2017/12/hvac-fan-photo-2-post-150px.png" alt="PCB board">
+					  <div class="overlay"><p>
+						Bacme #BR2048<br>301 Orders<br>$9.20 Two Day</p>
+						</div>			
+				</div>
+        <div class="catalog-part" mfr="Dacme" model="JustRight">
+          <img src="https://www.alexandercowan.com/wp-content/uploads/2017/12/hvac-board-4-post-150px.png" alt="PCB board 2">
+					<div class="overlay"><p>
+						Dacme #TR0988<br>12 Orders<br>$11.70 Same Day</p>
+					</div>	
+					</div>
+        <div class="catalog-part" mfr="Cacme" model="TooHot">
+          <img src="https://www.alexandercowan.com/wp-content/uploads/2017/12/hvac-metal-part-post-150px.png" alt="PCB board">
+					<div class="overlay"><p>
+						Cacme #RT7612<br>87 Orders<br>$90.34 Same Day</p>
+					</div>	
+					</div>
+</div>
