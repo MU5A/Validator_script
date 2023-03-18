@@ -17,8 +17,8 @@ describe("Email domain validator", function() {
     });
   });
   
-  //CODE UNDER TEST
-  //Validates email domain
+  //CODE UNDER TEST!!!
+  //Validates email domain "|{}{"{"|';[/"}
   function check_domain(email) {
     OKdomains = get_domains();
     //IRL, you'd want to validate the email address through an email (which Firebase does)
